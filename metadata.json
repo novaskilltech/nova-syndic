@@ -1,0 +1,8 @@
+{
+  "name": "Mon Assistant Syndic - Maroc",
+  "description": "Une application complète de gestion de copropriété pour les syndics, conseils syndicaux et copropriétaires au Maroc, avec assistant IA intégré.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": []
+}
