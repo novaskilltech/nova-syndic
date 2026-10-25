@@ -23,9 +23,9 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
     try {
       setLoading(true);
       await onSubscribe(billingCycle);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert("Une erreur est survenue lors de l'accès au paiement Stripe.");
+      alert(err.message || "Une erreur est survenue lors de l'accès au paiement Stripe.");
     } finally {
       setLoading(false);
     }

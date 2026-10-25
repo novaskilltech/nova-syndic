@@ -19,11 +19,8 @@ const App: React.FC = () => {
   const [showLanding, setShowLanding] = useState(false); // Toggle démo/landing
 
   const handleSubscribe = async (planInterval: 'month' | 'year') => {
-    // Appel vers l'Edge Function Supabase create-checkout-session
-    const supabaseUrl = 'https://jabdiekkjdayrfsinwct.supabase.co';
-    const functionUrl = `${supabaseUrl}/functions/v1/syndic-stripe-checkout`;
-    
-    const response = await fetch(functionUrl, {
+    // Appel direct vers l'API Vercel intégrée
+    const response = await fetch('/api/create-checkout-session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,10 +32,13 @@ const App: React.FC = () => {
     });
 
     const data = await response.json();
-    if (data.url) {
+    if (response.ok && data.url) {
       window.location.href = data.url;
     } else {
-      throw new Error(data.error || 'Erreur lors de la création de la session Stripe');
+      if (data.error === 'STRIPE_SECRET_KEY_MISSING') {
+        throw new Error("Clé secrète Stripe non configurée sur Vercel. Veuillez renseigner STRIPE_SECRET_KEY dans les variables d'environnement Vercel de votre projet.");
+      }
+      throw new Error(data.message || data.error || 'Erreur lors de la création de la session Stripe');
     }
   };
 
