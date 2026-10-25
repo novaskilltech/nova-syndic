@@ -29,10 +29,11 @@
     <meta name="twitter:description" content="الحل الذكي لتسيير الإقامات بالمغرب وفق القانون 18-00. غير بـ 9 دراهم للشقة فالشهر لعمارة ديال 16 شقة!">
     <meta name="twitter:image" content="https://syndic.novaskill.tech/og-image.jpg">
 
-    <!-- Fonts -->
+    <!-- Inwi Typography (Effra via Adobe Typekit) + Fallbacks -->
+    <link rel="stylesheet" href="https://use.typekit.net/zye4hor.css" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -40,16 +41,16 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Plus Jakarta Sans', 'sans-serif'],
-              arabic: ['Tajawal', 'sans-serif'],
+              sans: ['effra', 'Plus Jakarta Sans', 'Tajawal', 'sans-serif'],
+              arabic: ['effra', 'Tajawal', 'sans-serif'],
             }
           }
         }
       }
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', 'Tajawal', sans-serif; }
-        .font-ar { font-family: 'Tajawal', sans-serif; }
+        body { font-family: "effra", 'Plus Jakarta Sans', 'Tajawal', sans-serif; }
+        .font-ar, [dir="rtl"] { font-family: "effra", 'Tajawal', sans-serif; }
         @media print {
             .no-print { display: none !important; }
             body { background: white !important; }
