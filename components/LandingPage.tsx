@@ -223,6 +223,26 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartTrial, onOpenPr
                   • <strong>{isDarija ? 'الاشتراك السنوي :' : 'Abonnement annuel :'}</strong> 1 800 DH / {isDarija ? 'عام، يعني 150 درهم للشهر (كتجي تقريبا 9 دراهم للشقة)' : 'an, soit 150 DH / mois (soit ≈ 9,35 DH par lot)'}.
                 </p>
               </div>
+
+              <div className="mt-6">
+                <a
+                  href={billingCycle === 'year' ? 'https://buy.stripe.com/5kQ3cvbwCeV9b3R1eugbm0y' : 'https://buy.stripe.com/14A28reIO28n1thbT8gbm0x'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-base flex items-center justify-center gap-2 shadow-xl shadow-blue-600/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  <Sparkles size={18} className="text-yellow-300" />
+                  <span>
+                    {isDarija 
+                      ? `اشترك دابا بالبطاقة البنكية (${billingCycle === 'year' ? '1 800 درهم / عام' : '199 درهم / شهر'})`
+                      : `S'abonner maintenant via Stripe (${billingCycle === 'year' ? '1 800 DH / an' : '199 DH / mois'})`}
+                  </span>
+                </a>
+                <p className="text-center text-[11px] text-slate-500 mt-2 flex items-center justify-center gap-1.5">
+                  <ShieldCheck size={13} className="text-emerald-400" />
+                  <span>{isDarija ? 'أداء مؤمن 100% عبر Stripe المغرب' : 'Paiement sécurisé 100% garanti par Stripe'}</span>
+                </p>
+              </div>
             </div>
 
             {/* Avantages Inclus */}

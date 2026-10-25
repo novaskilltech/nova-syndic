@@ -19,9 +19,20 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
 
   if (!isOpen) return null;
 
+  const STRIPE_LINKS = {
+    month: 'https://buy.stripe.com/14A28reIO28n1thbT8gbm0x',
+    year: 'https://buy.stripe.com/5kQ3cvbwCeV9b3R1eugbm0y',
+  };
+
   const handleCheckout = async () => {
     try {
       setLoading(true);
+      // Redirection directe et instantanée vers le paiement Stripe hébergé
+      const directUrl = STRIPE_LINKS[billingCycle];
+      if (directUrl) {
+        window.location.href = directUrl;
+        return;
+      }
       await onSubscribe(billingCycle);
     } catch (err: any) {
       console.error(err);
