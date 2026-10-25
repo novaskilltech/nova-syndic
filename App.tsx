@@ -16,7 +16,7 @@ const App: React.FC = () => {
   const [activeView, setActiveView] = useState<AppView>(AppView.DASHBOARD);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
-  const [showLanding, setShowLanding] = useState(false); // Toggle démo/landing
+  const [showLanding, setShowLanding] = useState(true); // Affiche la landing page par défaut
 
   const handleSubscribe = async (planInterval: 'month' | 'year') => {
     // Appel direct vers l'API Vercel intégrée
