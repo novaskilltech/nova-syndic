@@ -14,9 +14,11 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView }) => {
     <div className="w-64 bg-white border-r h-screen fixed left-0 top-0 hidden md:flex flex-col shadow-sm">
       <div className="p-6">
         <h1 className="text-2xl font-black tracking-tight text-blue-600 flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center">
-            <Building2 size={18} />
-          </div>
+          <img 
+            src="/logo.jpg" 
+            alt="Nova Syndic" 
+            className="w-8 h-8 rounded-lg object-cover shadow-sm border border-blue-200"
+          />
           <span>Nova<span className="text-gray-900">Syndic</span></span>
           <span className="text-[10px] uppercase font-bold bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-md ml-auto">
             MAROC

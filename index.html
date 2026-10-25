@@ -1,14 +1,55 @@
-
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Assistant Syndic</title>
+    <title>Nova Syndic Maroc — تهنى من صداع السانديك وتسيير العمارة الذكي</title>
+    <meta name="description" content="الحل الذكي الأول بالمغرب لتسيير الإقامات المشتركة والسانديك وفق القانون 18-00. خلاص الواجبات، تتبع المداخيل والمصاريف، والذكاء الاصطناعي للمساعدة القانونية.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/logo.jpg">
+
+    <!-- Open Graph / Facebook / WhatsApp (Darija & Français) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://syndic.novaskill.tech/">
+    <meta property="og:title" content="نوفا سانديك المغرب — تهنى من صداع السانديك والواجبات الشهرية">
+    <meta property="og:description" content="تسيير ذكي للإقامات وفق القانون 18-00 • غير بـ 9 دراهم للشقة فالشهر لعمارة ديال 16 شقة! خلاص بـ Carte Bancaire، تتبع الصندوق، والذكاء الاصطناعي كيجاوّبك على كولشي.">
+    <meta property="og:image" content="https://syndic.novaskill.tech/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="675">
+    <meta property="og:locale" content="ar_MA">
+    <meta property="og:locale:alternate" content="fr_FR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:domain" content="syndic.novaskill.tech">
+    <meta name="twitter:url" content="https://syndic.novaskill.tech/">
+    <meta name="twitter:title" content="Nova Syndic Maroc — تهنى من مشاكل السانديك">
+    <meta name="twitter:description" content="الحل الذكي لتسيير الإقامات بالمغرب وفق القانون 18-00. غير بـ 9 دراهم للشقة فالشهر لعمارة ديال 16 شقة!">
+    <meta name="twitter:image" content="https://syndic.novaskill.tech/og-image.jpg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Plus Jakarta Sans', 'sans-serif'],
+              arabic: ['Tajawal', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', 'Tajawal', sans-serif; }
+        .font-ar { font-family: 'Tajawal', sans-serif; }
         @media print {
             .no-print { display: none !important; }
             body { background: white !important; }
@@ -30,7 +71,7 @@
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 text-slate-900">
     <div id="root"></div>
 <script type="module" src="/index.tsx"></script>
 </body>
