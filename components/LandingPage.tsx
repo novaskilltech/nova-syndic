@@ -29,28 +29,30 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartTrial, onOpenPr
   return (
     <div className={`min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-blue-500 selection:text-white ${isDarija ? 'font-ar' : ''}`}>
       {/* Top Navbar */}
-      <nav className="h-20 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 px-6 lg:px-16 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      <nav className="h-16 sm:h-20 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 px-3.5 sm:px-6 lg:px-16 flex items-center justify-between">
+        <div className="flex items-center gap-2 sm:gap-3">
           <img 
             src="/logo.jpg" 
             alt="Nova Syndic Logo" 
-            className="w-10 h-10 rounded-xl object-cover shadow-lg shadow-blue-500/20 border border-blue-500/30"
+            className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl object-cover shadow-lg shadow-blue-500/20 border border-blue-500/30"
           />
-          <span className="text-xl font-extrabold tracking-tight text-white flex items-center gap-1">
-            Nova<span className="text-blue-500">Syndic</span>
-            {isDarija && <span className="text-sm font-bold text-slate-400 mr-2">نوفا سانديك</span>}
-          </span>
-          <span className="text-[10px] uppercase font-bold tracking-widest bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full ml-1 hidden sm:inline-block">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-1.5">
+            <span className="text-lg sm:text-xl font-extrabold tracking-tight text-white flex items-center">
+              Nova<span className="text-blue-500">Syndic</span>
+            </span>
+            {isDarija && <span className="text-[11px] sm:text-sm font-bold text-slate-400">نوفا سانديك</span>}
+          </div>
+          <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full ml-1 hidden md:inline-block">
             {isDarija ? 'المغرب • القانون 18-00' : 'Maroc • Loi 18-00'}
           </span>
         </div>
 
-        <div className="flex items-center gap-3 md:gap-4">
+        <div className="flex items-center gap-1.5 sm:gap-3">
           {/* Sélecteur de langue DARIJA / FRANÇAIS */}
-          <div className="bg-slate-900 border border-slate-800 p-1 rounded-xl flex items-center text-xs font-bold">
+          <div className="bg-slate-900 border border-slate-800 p-0.5 sm:p-1 rounded-xl flex items-center text-[11px] sm:text-xs font-bold">
             <button
               onClick={() => setLang('darija')}
-              className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 ${
+              className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg transition-all flex items-center gap-1 ${
                 isDarija ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -58,20 +60,20 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartTrial, onOpenPr
             </button>
             <button
               onClick={() => setLang('fr')}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
+              className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg transition-all ${
                 !isDarija ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
               }`}
             >
-              Français
+              Fr
             </button>
           </div>
 
           <button
             onClick={onStartTrial}
-            className="px-4 md:px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs md:text-sm shadow-lg shadow-blue-600/30 transition-all flex items-center gap-2"
+            className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-600/30 transition-all flex items-center gap-1.5 active:scale-95"
           >
-            <span>{isDarija ? 'دخول التطبيق' : 'Espace Démo'}</span>
-            <ArrowRight size={16} />
+            <span>{isDarija ? 'الدخول' : 'Démo'}</span>
+            <ArrowRight size={14} />
           </button>
         </div>
       </nav>
@@ -82,9 +84,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartTrial, onOpenPr
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] bg-blue-600/20 blur-[140px] rounded-full pointer-events-none"></div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
-          <div className="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 px-4 py-1.5 rounded-full text-xs font-semibold text-slate-300">
-            <Sparkles size={14} className="text-amber-400" />
-            <span>
+          <div className="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold text-slate-300 max-w-full">
+            <Sparkles size={14} className="text-amber-400 flex-shrink-0" />
+            <span className="truncate sm:whitespace-normal">
               {isDarija 
                 ? 'أول منصة مغربية ذكية لتسيير السانديك بالذكاء الاصطناعي والقانون 18-00' 
                 : 'La 1ère solution de copropriété avec Assistant IA au Maroc'}
@@ -93,39 +95,39 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartTrial, onOpenPr
 
           {isDarija ? (
             /* VERSION DARIJA */
-            <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-[1.25] text-white">
-              تهنى من صداع السانديك وكناش الكريدي، <br />
-              <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.3] text-white break-words">
+              تهنى من صداع السانديك وكناش الكريدي،{' '}
+              <span className="block mt-2 sm:mt-1 bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
                 بثمن قهوة للشقة فالشهر !
               </span>
             </h1>
           ) : (
             /* VERSION FRANÇAIS */
-            <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-[1.15] text-white">
-              La sérénité pour votre copropriété, <br className="hidden sm:block" />
-              <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
-                pour le prix d'un café par appartement.
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.2] text-white">
+              La sérénité pour votre copropriété,{' '}
+              <span className="block mt-1 sm:inline bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
+                pour le prix d'un café par lot.
               </span>
             </h1>
           )}
 
-          <p className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto font-normal leading-relaxed">
+          <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto font-normal leading-relaxed px-2">
             {isDarija
               ? 'تتبع الواجبات الشهرية (Wajibati)، تذكير الملاك فالواتساب بلا حراج، حساب المصاريف، وذكاء اصطناعي كيجاوّبك قانونياً على أي نزاع أو جمع عام وفق القانون 18-00.'
               : 'Suivi des charges (Wajibati), relances impayés WhatsApp, génération de PV d\'AG et un assistant IA juriste expert de la Loi 18-00 marocaine.'}
           </p>
 
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 max-w-md sm:max-w-none mx-auto">
             <button
               onClick={onOpenPricing}
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-base shadow-xl shadow-blue-600/30 transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-blue-600/30 transition-all flex items-center justify-center gap-2 active:scale-95"
             >
-              <Zap size={20} className="text-yellow-300 fill-current" />
+              <Zap size={18} className="text-yellow-300 fill-current" />
               <span>{isDarija ? 'شوف الأثمنة بالدرهم المغربي' : 'Voir les Formules en Dirhams'}</span>
             </button>
             <button
               onClick={onStartTrial}
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 font-bold text-base transition-all"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 font-bold text-sm sm:text-base transition-all active:scale-95 text-center"
             >
               {isDarija ? 'جرّب المنصة دابا' : 'Découvrir la Démo'}
             </button>

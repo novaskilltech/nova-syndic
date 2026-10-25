@@ -43,23 +43,34 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-gray-100 overflow-hidden relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-fadeIn overflow-y-auto">
+      <div className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-gray-100 overflow-hidden relative my-auto max-h-[92vh] flex flex-col">
+        {/* Close Button */}
+        {onClose && (
+          <button 
+            onClick={onClose}
+            className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-black/20 hover:bg-black/40 text-white flex items-center justify-center transition-colors"
+            aria-label="Fermer"
+          >
+            ✕
+          </button>
+        )}
+
         {/* Header avec gradient */}
-        <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 p-8 text-white text-center relative">
-          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-3">
+        <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 p-6 sm:p-8 text-white text-center relative flex-shrink-0">
+          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider mb-2.5">
             <Sparkles size={14} className="text-yellow-300" />
             Tarification Spéciale Copropriété Maroc
           </div>
-          <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight">
             Activez Nova Syndic pour votre Résidence
           </h2>
-          <p className="text-blue-100 mt-2 text-sm max-w-lg mx-auto">
+          <p className="text-blue-100 mt-1.5 text-xs sm:text-sm max-w-lg mx-auto">
             La solution tout-en-un conforme à la Loi 18-00 marocaine : suivi des cotisations, comptabilité, maintenance et assistant IA.
           </p>
         </div>
 
-        <div className="p-6 md:p-8 space-y-6">
+        <div className="p-5 sm:p-8 space-y-5 overflow-y-auto">
           {/* Toggle Mensuel / Annuel */}
           <div className="flex justify-center">
             <div className="bg-gray-100 p-1.5 rounded-2xl flex items-center gap-1 border border-gray-200">
