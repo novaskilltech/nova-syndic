@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTok Ad - Nova Syndic (Français)</title>
+  <link rel="stylesheet" href="https://use.typekit.net/zye4hor.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'effra', 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .tiktok-card {
+      width: 360px;
+      height: 640px;
+      position: relative;
+      background: #0f172a;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 30px rgba(79, 70, 229, 0.3);
+      border: 3px solid #312e81;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* TikTok Overlay UI */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px 20px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.85) 100%);
+      pointer-events: none;
+    }
+    .badge-top {
+      align-self: flex-start;
+      background: rgba(79, 70, 229, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .hook-text {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-top: 14px;
+      animation: fadeIn 0.8s ease;
+    }
+    .hook-text h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      line-height: 1.25;
+      color: #fff;
+    }
+    .hook-text span.blue {
+      color: #38bdf8;
+    }
+    .bottom-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: auto;
+    }
+    .subtitles-box {
+      background: rgba(0, 0, 0, 0.85);
+      border-left: 4px solid #38bdf8;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      line-height: 1.4;
+      font-weight: 600;
+      color: #f8fafc;
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+    }
+    .tiktok-cta {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: white;
+      text-align: center;
+      padding: 14px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.5);
+    }
+    .controls {
+      margin-top: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .btn-ctrl {
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ctrl:hover { background: #4338ca; }
+    .download-link {
+      color: #38bdf8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tiktok-card">
+    <video id="vid" src="/ads/tiktok-immeuble-maroc.mp4" loop playsinline muted></video>
+
+    <div class="overlay">
+      <div>
+        <div class="badge-top">
+          <i class="fas fa-building"></i> NOVA SYNDIC MAROC
+        </div>
+        <div class="hook-text">
+          <h1>Gérez votre copropriété <span class="blue">sans stress</span> et en conformité Loi 18-00.</h1>
+        </div>
+      </div>
+
+      <div class="bottom-section">
+        <div class="subtitles-box" id="subBox">
+          "Fini les retards de cotisations et les disputes de voisinage."
+        </div>
+        <a href="https://syndic.novaskill.tech" target="_blank" class="tiktok-cta">
+          <span>Tester sur syndic.novaskill.tech</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn-ctrl" onclick="togglePlay()">
+      <i class="fas fa-play" id="iconPlay"></i> <span id="labelPlay">Lancer la pub TikTok</span>
+    </button>
+    <a href="/ads/tiktok-immeuble-maroc.mp4" download="nova-syndic-tiktok-fr.mp4" class="download-link">
+      <i class="fas fa-download"></i> Télécharger le MP4 brut
+    </a>
+  </div>
+  <div style="margin-top: 10px; font-size: 0.85rem;">
+    <a href="/ads/tiktok-arabe.html" style="color: #a5b4fc; text-decoration: none;">Voir la version Arabe (العربية الفصحى) &rarr;</a>
+  </div>
+
+  <script>
+    const lines = [
+      "Fini les retards de cotisations et les disputes de voisinage.",
+      "Suivi des paiements Wajibati et rappels WhatsApp en un clic.",
+      "Convocations et PV d'Assemblée Générale générés en 30 secondes.",
+      "Conforme à 100% avec la Loi marocaine 18-00 sur la copropriété.",
+      "Rejoignez Nova Syndic dès maintenant sur syndic.novaskill.tech !"
+    ];
+
+    let lineIdx = 0;
+    let isPlaying = false;
+    let speechTimer = null;
+    const vid = document.getElementById('vid');
+
+    function speakNext() {
+      if (!isPlaying) return;
+      const text = lines[lineIdx];
+      document.getElementById('subBox').innerText = `"${text}"`;
+
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'fr-FR';
+        utter.rate = 1.0;
+        utter.pitch = 1.0;
+        utter.onend = () => {
+          if (isPlaying) {
+            lineIdx = (lineIdx + 1) % lines.length;
+            speechTimer = setTimeout(speakNext, 800);
+          }
+        };
+        window.speechSynthesis.speak(utter);
+      }
+    }
+
+    function togglePlay() {
+      if (isPlaying) {
+        isPlaying = false;
+        vid.pause();
+        clearTimeout(speechTimer);
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        document.getElementById('iconPlay').className = 'fas fa-play';
+        document.getElementById('labelPlay').innerText = 'Reprendre';
+      } else {
+        isPlaying = true;
+        vid.play();
+        document.getElementById('iconPlay').className = 'fas fa-pause';
+        document.getElementById('labelPlay').innerText = 'Pause';
+        speakNext();
+      }
+    }
+  </script>
+</body>
+</html>
