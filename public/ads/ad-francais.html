@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Syndic - Vidéo Publicitaire (Français)</title>
+  <link rel="stylesheet" href="https://use.typekit.net/zye4hor.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0b0f19;
+      color: #fff;
+      font-family: 'effra', 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .video-frame {
+      width: 380px;
+      height: 675px; /* 9:16 vertical ratio */
+      background: linear-gradient(145deg, #0f172a, #1e1b4b);
+      border-radius: 36px;
+      border: 4px solid #312e81;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 30px rgba(99, 102, 241, 0.2);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .screen {
+      position: absolute;
+      inset: 0;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+    .screen.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    /* Brand Header */
+    .brand-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #818cf8;
+      letter-spacing: 0.5px;
+    }
+    .brand-bar i {
+      background: #4f46e5;
+      color: white;
+      padding: 8px;
+      border-radius: 10px;
+    }
+    .badge {
+      align-self: flex-start;
+      background: rgba(99, 102, 241, 0.2);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #a5b4fc;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    h2 {
+      font-size: 1.85rem;
+      line-height: 1.25;
+      font-weight: 800;
+      margin-top: 12px;
+      background: linear-gradient(to right, #ffffff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .highlight {
+      color: #38bdf8;
+      -webkit-text-fill-color: #38bdf8;
+    }
+    .subtitle {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+    /* Graphic Cards */
+    .card-preview {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 16px;
+      margin: 16px 0;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #10b981;
+    }
+    .bar-bg {
+      background: #334155;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      background: #10b981;
+      height: 100%;
+      width: 85%;
+      border-radius: 4px;
+    }
+    /* Whatsapp mock */
+    .whatsapp-box {
+      background: #064e3b;
+      border-left: 4px solid #10b981;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      color: #d1fae5;
+    }
+    .cta-btn {
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: white;
+      text-align: center;
+      padding: 14px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.5px;
+      box-shadow: 0 10px 20px rgba(79, 70, 229, 0.4);
+    }
+    /* Subtitles bar */
+    .voice-subtitles {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      color: #f8fafc;
+      text-align: center;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+    }
+    /* Progress timeline */
+    .timeline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      gap: 4px;
+      padding: 10px 16px;
+      z-index: 50;
+    }
+    .timeline-dot {
+      flex: 1;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .timeline-dot-fill {
+      height: 100%;
+      width: 0%;
+      background: #6366f1;
+      transition: width linear;
+    }
+    /* Controls */
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    button.ctrl-btn {
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    button.ctrl-btn:hover { background: #4338ca; }
+    .nav-links {
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+    .nav-links a { color: #818cf8; text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="controls">
+      <button class="ctrl-btn" id="playBtn" onclick="togglePlay()">
+        <i class="fas fa-play" id="playIcon"></i> <span id="playLabel">Lancer la vidéo</span>
+      </button>
+      <button class="ctrl-btn" style="background:#0f172a; border: 1px solid #334155;" onclick="restart()">
+        <i class="fas fa-rotate-left"></i> Recommencer
+      </button>
+    </div>
+
+    <div class="video-frame" id="frame">
+      <!-- Progress Bar -->
+      <div class="timeline">
+        <div class="timeline-dot"><div class="timeline-dot-fill" id="t0"></div></div>
+        <div class="timeline-dot"><div class="timeline-dot-fill" id="t1"></div></div>
+        <div class="timeline-dot"><div class="timeline-dot-fill" id="t2"></div></div>
+        <div class="timeline-dot"><div class="timeline-dot-fill" id="t3"></div></div>
+        <div class="timeline-dot"><div class="timeline-dot-fill" id="t4"></div></div>
+      </div>
+
+      <!-- SCENE 1: ACCROCHE / PROBLÈME -->
+      <div class="screen active" id="scene0">
+        <div>
+          <div class="brand-bar"><i class="fas fa-building"></i> NOVA SYNDIC</div>
+          <span class="badge" style="margin-top:14px;">Gestion d'immeuble au Maroc</span>
+          <h2>Fatigué de courir après les <span class="highlight">cotisations</span> ?</h2>
+          <p class="subtitle">Carnets perdus, retards de paiement, réunions sans fin...</p>
+        </div>
+        <div class="card-preview" style="border-left: 4px solid #ef4444;">
+          <div class="metric-row">
+            <span style="color:#f87171; font-weight:700;"><i class="fas fa-clock"></i> Impayés constatés</span>
+            <span style="color:#ef4444; font-weight:800;">45% en retard</span>
+          </div>
+          <p style="font-size:0.8rem; color:#94a3b8;">La gestion manuelle coûte du temps et génère des tensions.</p>
+        </div>
+        <div class="voice-subtitles" id="sub0">
+          "Être syndic au Maroc ne devrait plus être un casse-tête quotidien."
+        </div>
+      </div>
+
+      <!-- SCENE 2: LA SOLUTION -->
+      <div class="screen" id="scene1">
+        <div>
+          <div class="brand-bar"><i class="fas fa-bolt"></i> LA SOLUTION DIGITALE</div>
+          <span class="badge" style="margin-top:14px;">100% Conforme Loi 18-00</span>
+          <h2>Passez à la gestion <span class="highlight">automatisée</span>.</h2>
+          <p class="subtitle">Une application tout-en-un conçue pour les syndics professionnels et bénévoles.</p>
+        </div>
+        <div class="card-preview">
+          <div class="metric-row">
+            <span>Taux de recouvrement</span>
+            <span class="metric-value">92%</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill"></div></div>
+          <div style="display:flex; justify-content:space-between; margin-top:10px; font-size:0.8rem; color:#94a3b8;">
+            <span>Immeuble Palmier</span>
+            <span>Trésorerie saine</span>
+          </div>
+        </div>
+        <div class="voice-subtitles" id="sub1">
+          "Découvrez Nova Syndic : la plateforme marocaine conforme à la Loi 18-00."
+        </div>
+      </div>
+
+      <!-- SCENE 3: FONCTIONNALITÉ WHATSAPP -->
+      <div class="screen" id="scene2">
+        <div>
+          <div class="brand-bar"><i class="fab fa-whatsapp" style="background:#10b981;"></i> RELANCE 1-CLIC</div>
+          <span class="badge" style="margin-top:14px;">Zéro friction</span>
+          <h2>Rappels WhatsApp <span class="highlight">courtois & fermes</span>.</h2>
+          <p class="subtitle">Envoyez des avis de paiement Wajibati instantanés et professionnels.</p>
+        </div>
+        <div class="card-preview">
+          <div class="whatsapp-box">
+            <i class="fab fa-whatsapp"></i> <strong>Avis Wajibati</strong><br>
+            "Bonjour M. Amrani, rappel bienveillant pour la cotisation de 250 DH du mois d'octobre..."
+          </div>
+        </div>
+        <div class="voice-subtitles" id="sub2">
+          "Relancez vos copropriétaires en un clic sur WhatsApp, sans tensions."
+        </div>
+      </div>
+
+      <!-- SCENE 4: ASSISTANT IA & AG -->
+      <div class="screen" id="scene3">
+        <div>
+          <div class="brand-bar"><i class="fas fa-robot"></i> ASSISTANT JURIDIQUE IA</div>
+          <span class="badge" style="margin-top:14px;">Expertise Juridique</span>
+          <h2>Convocations d'AG et PV <span class="highlight">en 30 secondes</span>.</h2>
+          <p class="subtitle">Posez vos questions à l'IA : calcul des majorités, devis travaux, modèle de PV.</p>
+        </div>
+        <div class="card-preview" style="background: rgba(49, 46, 129, 0.4);">
+          <div style="font-size:0.85rem; color:#c7d2fe; display:flex; gap:8px; align-items:center;">
+            <i class="fas fa-check-circle" style="color:#38bdf8;"></i> PV d'Assemblée Générale généré
+          </div>
+          <div style="font-size:0.85rem; color:#c7d2fe; display:flex; gap:8px; align-items:center; margin-top:8px;">
+            <i class="fas fa-check-circle" style="color:#38bdf8;"></i> Quorum certifié selon Loi 18-00
+          </div>
+        </div>
+        <div class="voice-subtitles" id="sub3">
+          "Votre assistant IA prépare vos AG et répond à vos questions réglementaires 24h/24."
+        </div>
+      </div>
+
+      <!-- SCENE 5: CALL TO ACTION -->
+      <div class="screen" id="scene4">
+        <div>
+          <div class="brand-bar"><i class="fas fa-star" style="color:#facc15;"></i> ESSAYEZ MAINTENANT</div>
+          <span class="badge" style="margin-top:14px;">Offre de Lancement</span>
+          <h2>Simplifiez votre résidence <span class="highlight">dès aujourd'hui</span>.</h2>
+          <p class="subtitle">Disponible immédiatement sur mobile, tablette et ordinateur.</p>
+        </div>
+        <div style="margin: 20px 0;">
+          <div class="cta-btn">
+            syndic.novaskill.tech
+          </div>
+          <p style="text-align:center; color:#94a3b8; font-size:0.85rem; margin-top:12px;">Sans engagement • Installation immédiate</p>
+        </div>
+        <div class="voice-subtitles" id="sub4">
+          "Rendez-vous sur syndic.novaskill.tech et essayez dès aujourd'hui."
+        </div>
+      </div>
+
+    </div>
+
+    <div class="nav-links">
+      Format 9:16 Story/Reel (Sans visage • Sans musique) | <a href="/ads/ad-darija.html">Voir la version Darija &rarr;</a>
+    </div>
+  </div>
+
+  <script>
+    const scenes = [
+      { id: 'scene0', tId: 't0', duration: 5500, text: "Être syndic au Maroc ne devrait plus être un casse-tête quotidien." },
+      { id: 'scene1', tId: 't1', duration: 5500, text: "Découvrez Nova Syndic : la plateforme marocaine conforme à la Loi 18-00." },
+      { id: 'scene2', tId: 't2', duration: 5000, text: "Relancez vos copropriétaires en un clic sur WhatsApp, sans tensions." },
+      { id: 'scene3', tId: 't3', duration: 5500, text: "Votre assistant IA prépare vos AG et répond à vos questions réglementaires 24h sur 24." },
+      { id: 'scene4', tId: 't4', duration: 6000, text: "Rendez-vous sur syndic point novaskill point tech et essayez dès aujourd'hui." }
+    ];
+
+    let currentIdx = 0;
+    let isPlaying = false;
+    let timer = null;
+
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'fr-FR';
+        utter.rate = 1.0;
+        utter.pitch = 1.0;
+        window.speechSynthesis.speak(utter);
+      }
+    }
+
+    function showScene(idx) {
+      scenes.forEach((s, i) => {
+        const el = document.getElementById(s.id);
+        const tEl = document.getElementById(s.tId);
+        if (i === idx) {
+          el.classList.add('active');
+          tEl.style.transitionDuration = (s.duration) + 'ms';
+          tEl.style.width = '100%';
+        } else if (i < idx) {
+          el.classList.remove('active');
+          tEl.style.transitionDuration = '0s';
+          tEl.style.width = '100%';
+        } else {
+          el.classList.remove('active');
+          tEl.style.transitionDuration = '0s';
+          tEl.style.width = '0%';
+        }
+      });
+
+      if (isPlaying) {
+        speakText(scenes[idx].text);
+        timer = setTimeout(() => {
+          if (currentIdx < scenes.length - 1) {
+            currentIdx++;
+            showScene(currentIdx);
+          } else {
+            pause();
+          }
+        }, scenes[idx].duration);
+      }
+    }
+
+    function togglePlay() {
+      if (isPlaying) {
+        pause();
+      } else {
+        play();
+      }
+    }
+
+    function play() {
+      isPlaying = true;
+      document.getElementById('playIcon').className = 'fas fa-pause';
+      document.getElementById('playLabel').innerText = 'Pause';
+      showScene(currentIdx);
+    }
+
+    function pause() {
+      isPlaying = false;
+      clearTimeout(timer);
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      document.getElementById('playIcon').className = 'fas fa-play';
+      document.getElementById('playLabel').innerText = 'Reprendre';
+    }
+
+    function restart() {
+      pause();
+      currentIdx = 0;
+      scenes.forEach(s => {
+        document.getElementById(s.tId).style.transitionDuration = '0s';
+        document.getElementById(s.tId).style.width = '0%';
+      });
+      play();
+    }
+  </script>
+</body>
+</html>
