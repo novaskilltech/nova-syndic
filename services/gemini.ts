@@ -21,20 +21,42 @@ Formatte tes réponses avec du Markdown pour une meilleure lisibilité.
 `;
 
 export const getSyndicAssistantResponse = async (history: ChatMessage[], message: string): Promise<string> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  
-  // Create chat with history
-  const chat = ai.chats.create({
-    model: 'gemini-3-flash-preview',
-    config: {
-      systemInstruction: SYSTEM_INSTRUCTION,
-      temperature: 0.7,
-    }
-  });
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message,
+        history,
+      }),
+    });
 
-  // Since we use the chat object, we only send the latest message
-  // but logically we could also reconstruct history if needed.
-  // For now, simplicity:
-  const result = await chat.sendMessage({ message });
-  return result.text || "Désolé, je ne peux pas répondre pour le moment.";
+    const data = await response.json();
+    if (response.ok && data.text) {
+      return data.text;
+    }
+    throw new Error(data.message || data.error || 'Erreur API IA');
+  } catch (error: any) {
+    console.error('getSyndicAssistantResponse error:', error);
+    // Réponse de secours intelligente Loi 18-00 si hors-ligne
+    if (message.toLowerCase().includes('convoquer') || message.toLowerCase().includes('ag')) {
+      return `### Convocation de l'Assemblée Générale (Loi 18-00)
+
+Conformément à la **Loi 18-00** relative à la copropriété au Maroc :
+
+1. **Délai :** Les convocations doivent être adressées au moins **15 jours** avant la date de la réunion (sauf urgence motivée).
+2. **Moyen de notification :** Lettre recommandée avec accusé de réception ou remise en main propre contre récépissé émargé.
+3. **Contenu obligatoire :**
+   - Date, heure et lieu précis de la réunion.
+   - **Ordre du jour détaillé** (seuls les points inscrits peuvent être votés).
+   - États financiers prévisionnels et devis de travaux si vote financier.
+4. **Quorum :**
+   - 1ère convocation : Présence ou représentation d'au moins **la moitié** des quotes-parts des copropriétaires.
+   - Si quorum non atteint : Convocation d'une 2nde AG sous 30 jours, statuant à la majorité des présents.`;
+    }
+
+    return "Désolé, une erreur temporaire est survenue lors de la connexion à l'IA. Veuillez réessayer dans un instant.";
+  }
 };
