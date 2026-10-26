@@ -1,5 +1,4 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { GoogleGenAI } from '@google/genai';
 
 const SYSTEM_INSTRUCTION = `
 Tu es "Mon Assistant Syndic", un assistant IA expert en gestion de copropriété au Maroc.
@@ -29,10 +28,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
-  if (!apiKey) {
-    return res.status(500).json({ error: 'GEMINI_API_KEY_MISSING', message: 'Clé Gemini API non configurée.' });
-  }
+  const kiloApiKey = process.env.KILO_API_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnYiOiJwcm9kdWN0aW9uIiwia2lsb1VzZXJJZCI6ImQ0ZmEzY2FlLTQxNWMtNDQxMi05NzM4LTZlZDk1NjUwOWIyMSIsImFwaVRva2VuUGVwcGVyIjpudWxsLCJ2ZXJzaW9uIjozLCJpYXQiOjE3OTI5NzUxNzYsImV4cCI6MTk1MDY1NTE3Nn0.jt2N8IyfjjNWNViBr_LzmgI4bslANJzwFxSUcqSfWbI';
 
   try {
     const { message, history } = req.body || {};
@@ -41,35 +37,69 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'Message requis.' });
     }
 
-    const ai = new GoogleGenAI({ apiKey });
+    const messages = [
+      { role: 'system', content: SYSTEM_INSTRUCTION }
+    ];
 
-    // Modèles avec fallback pour garantir 100% de disponibilité
-    const modelsToTry = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-2.0-flash'];
+    if (Array.isArray(history)) {
+      for (const item of history) {
+        if (item.text) {
+          messages.push({
+            role: item.sender === 'user' ? 'user' : 'assistant',
+            content: item.text
+          });
+        }
+      }
+    }
+
+    messages.push({ role: 'user', content: message });
+
+    // Modèles Kilo ordonnés par pertinence et rapidité
+    const modelsToTry = [
+      'deepseek/deepseek-chat',
+      'openai/gpt-4o-mini',
+      'anthropic/claude-3-5-haiku',
+      'kilo-auto/efficient'
+    ];
+
     let lastError: any = null;
 
-    for (const modelName of modelsToTry) {
+    for (const model of modelsToTry) {
       try {
-        const response = await ai.models.generateContent({
-          model: modelName,
-          contents: message,
-          config: {
-            systemInstruction: SYSTEM_INSTRUCTION,
-            temperature: 0.7,
-          }
+        const response = await fetch('https://api.kilo.ai/api/gateway/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${kiloApiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model,
+            messages,
+            max_tokens: 1500,
+            temperature: 0.7
+          })
         });
 
-        if (response && response.text) {
-          return res.status(200).json({ text: response.text });
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(`Kilo error [${response.status}]: ${errText}`);
+        }
+
+        const data: any = await response.json();
+        const content = data.choices?.[0]?.message?.content;
+
+        if (content && typeof content === 'string' && content.trim().length > 0) {
+          return res.status(200).json({ text: content.trim() });
         }
       } catch (err: any) {
-        console.warn(`Modèle ${modelName} indisponible: ${err.message}. Essai du suivant...`);
+        console.warn(`Modèle ${model} indisponible sur Kilo: ${err.message}. Essai suivant...`);
         lastError = err;
       }
     }
 
-    throw lastError || new Error('Impossible d\'obtenir une réponse de Gemini.');
+    throw lastError || new Error('Aucun modèle Kilo n\'a pu répondre.');
   } catch (error: any) {
-    console.error('Erreur API Chat Gemini:', error);
+    console.error('Erreur API Chat Kilo:', error);
     return res.status(500).json({ 
       error: 'AI_ERROR', 
       message: error.message || 'Erreur lors de la génération de la réponse IA.' 
